@@ -1,5 +1,5 @@
-%{"hackney": {:package, "1.0.6"},
-  "httpoison": {:package, "0.6.2"},
-  "idna": {:package, "1.0.2"},
-  "json": {:package, "0.3.2"},
-  "ssl_verify_hostname": {:package, "1.0.1"}}
+%{"hackney": {:hex, :hackney, "1.0.6"},
+  "httpoison": {:hex, :httpoison, "0.6.2"},
+  "idna": {:hex, :idna, "1.0.2"},
+  "json": {:hex, :json, "0.3.2"},
+  "ssl_verify_hostname": {:hex, :ssl_verify_hostname, "1.0.1"}}
