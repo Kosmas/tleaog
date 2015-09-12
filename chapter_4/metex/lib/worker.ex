@@ -7,6 +7,10 @@ defmodule Metex.Worker do
     GenServer.start_link(__MODULE__, :ok, opts)
   end
 
+  def get_temperature(pid, location) do
+    GenServer.call(pid, {:location, location})
+  end
+
   ## Server Callbacks
 
   def init(:ok) do
