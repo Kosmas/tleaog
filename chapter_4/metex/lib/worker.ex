@@ -17,5 +17,14 @@ defmodule Metex.Worker do
     {:ok, %{}}
   end
 
+  def handle_call({:location, location}, _from, state) do
+    case temperature_of(location) do
+      {:ok, temp} ->
+        new_stats = update_stats(stats, location)
+        {:reply, "#{temp}C", new_stats}
+      _ ->
+        {:reply, :error, stats}
+    end
+  end
   ## Helper Functions
 end
