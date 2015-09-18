@@ -58,6 +58,10 @@ defmodule Metex.Worker do
     {:stop, :normal, stats}
   end
 
+  def handle_info(msg, stats) do
+    IO.puts "received #{inspect msg}"
+    {:noreply, stats}
+  end
   ## Helper Functions
 
   defp temperature_of(location) do
