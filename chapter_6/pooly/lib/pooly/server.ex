@@ -23,6 +23,7 @@ defmodule Pooly.Server do
   ################
 
   def init([sup, pool_config]) when is_pid(sup) do
+    monitors = :ets.new(:monitors, [:private])
     init(pool_config, %State{sup: sup})
   end
 
