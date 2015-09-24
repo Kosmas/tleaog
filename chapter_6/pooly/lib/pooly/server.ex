@@ -35,7 +35,7 @@ defmodule Pooly.Server do
     init(pool_config, %State{sup: sup})
   end
 
-  def init([:mfa, mfa}|rest], state) do
+  def init([:mfa, mfa|rest], state) do
     init(rest, %{state | mfa: mfa})
   end
 
