@@ -14,6 +14,10 @@ defmodule Pooly.Server do
     GenServer.start_link(__MODULE__, [sup, pool_config], name: __MODULE__)
   end
   
+  def checkout do
+    GenServer.call(__MODULE__, :checkout)
+  end
+
   #################
   # Callbacks    #
   ################
@@ -37,6 +41,17 @@ defmodule Pooly.Server do
   def init([], state) do
     send(self, :start_worker_supervisor)
     {:ok, state}
+  end
+
+  def handle_call(:checkout, {from_pid, _ref}, %{workers: workers, monitors: monitors} = state) do
+    case workers do
+      [worker|rest] ->
+        ref = Process.monitor(from_pid)
+        true = :ets.insert(monitors, {worker, ref})
+        {:reply, worker, %{state | workers: rest}}
+      [] ->
+        {:reply, :noproc, state}
+    end
   end
 
   def handle_info(:start_worker_supervisor, state = %{sup: sup, mfa: mfa, size: size}) do
