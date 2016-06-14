@@ -1,5 +1,5 @@
-%{"hackney": {:hex, :hackney, "1.0.6"},
-  "httpoison": {:hex, :httpoison, "0.6.2"},
-  "idna": {:hex, :idna, "1.0.2"},
-  "json": {:hex, :json, "0.3.2"},
-  "ssl_verify_hostname": {:hex, :ssl_verify_hostname, "1.0.1"}}
+%{"hackney": {:hex, :hackney, "1.0.6", "edfabd6f03d7bb2aa224a438b2bd6295faf6df5fd3aeafad7a78cdae41252cde", [:make, :rebar], [{:ssl_verify_hostname, "1.0.1", [hex: :ssl_verify_hostname, optional: false]}, {:idna, "1.0.2", [hex: :idna, optional: false]}]},
+  "httpoison": {:hex, :httpoison, "0.6.2", "a1e95f5b00b0a17b5793a288e121e61399864a8779dbbc3aeda7580e0043d2b0", [:mix], [{:hackney, "~> 1.0", [hex: :hackney, optional: false]}]},
+  "idna": {:hex, :idna, "1.0.2", "397e3d001c002319da75759b0a81156bf11849c71d565162436d50020cb7265e", [:make], []},
+  "json": {:hex, :json, "0.3.2", "e40a15993024a0cb4f5e22816d6be34002cc4463c61789ed35ec94c41911ebee", [:mix], []},
+  "ssl_verify_hostname": {:hex, :ssl_verify_hostname, "1.0.1", "e6ef428c350d1b7e9c534c0929caae1ecb47c22f88cbbb880e07e46918380cc5", [:make], []}}
