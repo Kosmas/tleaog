@@ -34,6 +34,7 @@ defmodule Pooly.Server do
     Process.flag(:trap_exit, true)
     monitors = :ets.new(:monitors, [:private])
     init(pool_config, %State{sup: sup})
+    # TODO: is monitors: monitors missing above? chp7 p3
   end
 
   def init([:mfa, mfa|rest], state) do
