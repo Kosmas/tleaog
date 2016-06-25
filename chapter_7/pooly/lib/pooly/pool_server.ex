@@ -3,7 +3,7 @@ defmodule Pooly.PoolServer do
   import Supervisor.Spec
 
   defmodule State do
-    defstruct pool_sup: nil, worker_sup: nil, monitors: nil, size: nil, workers: nil, name: nil, mfa: nil
+    defstruct pool_sup: nil, worker_sup: nil, monitors: nil, size: nil, workers: nil, name: nil, mfa: nil, overflow: nil, max_overflow: nil
   end
 
   #################
@@ -46,6 +46,10 @@ defmodule Pooly.PoolServer do
 
   def init([{:size, size}|rest], state) do
     init(rest, %{state | size: size})
+  end
+
+  def init([{:max_overflow, max_overflow}|rest], state) do
+    init(rest, %{state | max_overflow: max_overflow})
   end
 
   def init([_|rest], state) do
