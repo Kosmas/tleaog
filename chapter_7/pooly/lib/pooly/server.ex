@@ -13,7 +13,7 @@ defmodule Pooly.Server do
   def start_link(sup, pool_config) do
     GenServer.start_link(__MODULE__, [sup, pool_config], name: __MODULE__)
   end
-  
+
   def checkout do
     GenServer.call(__MODULE__, :checkout)
   end
@@ -81,6 +81,17 @@ defmodule Pooly.Server do
     {:ok, worker_sup} = Supervisor.start_child(sup, supervisor_spec(mfa))
     workers = prepopulate(size, worker_sup)
     {:noreply, %{state | worker_sup: worker_sup, workers: workers}}
+  end
+
+  def handle_info({:DOWN, ref, _, _, _}, state = %{monitors: monitors, workers: workers}) do
+    case :ets.match(monitors, {:"$1", ref}) do
+      [[pid]] ->
+        true = :ets.delete(monitors, pid)
+        new_state = %{state | workers: [pid|workers]}
+        {:no_reply, new_state}
+      [[]] ->
+        {:no_reply, state}
+    end
   end
 
   #########################
