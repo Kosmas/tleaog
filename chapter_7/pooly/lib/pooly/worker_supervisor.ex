@@ -5,7 +5,7 @@ defmodule Pooly.WorkerSupervisor do
   #  API    #
   ###########
 
-  def start_link({_,_,_} = mfa) do
+  def start_link(pool_server, {_,_,_} = mfa) do
     Supervisor.start_link(__MODULE__, [pool_server, mfa])
   end
 

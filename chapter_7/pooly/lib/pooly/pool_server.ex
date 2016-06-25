@@ -84,7 +84,7 @@ defmodule Pooly.PoolServer do
   end
 
   def handle_info(:start_worker_supervisor, state = %{pool_sup: pool_sup, name: name, mfa: mfa, size: size}) do
-    {:ok, worker_sup} = Supervisor.start_child(pool_sup: pool_sup, supervisor_spec(name, mfa))
+    {:ok, worker_sup} = Supervisor.start_child(pool_sup, supervisor_spec(name, mfa))
     workers = prepopulate(size, worker_sup)
     {:noreply, %{state | worker_sup: worker_sup, workers: workers}}
   end
@@ -147,20 +147,5 @@ defmodule Pooly.PoolServer do
   defp supervisor_spec(name, mfa) do
     opts = [id: name <> "WorkerSupervisor", restart: :temporary]
     supervisor(Pooly.WorkerSupervisor, [self, mfa], opts)
-  end
-end
-
-  def handle_info({:start_pool, pool_config}, state) do
-    {:ok, _pool_sup} = Supervisor.start_child(Pooly.PoolsSupervisor, supervisor_spec(pool_config))
-    {:noreply, state}
-  end
-
-  #########################
-  # Private Functions    #
-  ########################
-
-  defp supervisor_spec(pool_config) do
-    opts = [id: :"#{pool_config[:name]}Supervisor"]: :temporary]
-    supervisor(Pooly.PoolSupervisor, [pool_config], opts)
   end
 end

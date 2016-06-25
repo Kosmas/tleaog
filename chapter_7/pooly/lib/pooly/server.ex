@@ -31,7 +31,7 @@ defmodule Pooly.Server do
       send(self, {:start_pool, pool_config})
     end)
 
-    {:ok, pools_config)
+    {:ok, pools_config}
   end
 
   def handle_info({:start_pool, pool_config}, state) do
@@ -44,7 +44,7 @@ defmodule Pooly.Server do
   ########################
 
   defp supervisor_spec(pool_config) do
-    opts = [id: :"#{pool_config[:name]}Supervisor"]: :temporary]
+    opts = [id: :"#{pool_config[:name]}Supervisor"]
     supervisor(Pooly.PoolSupervisor, [pool_config], opts)
   end
 end
