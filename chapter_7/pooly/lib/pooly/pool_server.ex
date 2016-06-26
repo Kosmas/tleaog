@@ -159,6 +159,19 @@ defmodule Pooly.PoolServer do
     Supervisor.terminate_child(sup, pid)
   end
 
+  defp handle_worker_exit(pid, state) do
+    %{worker_sup:     worker_sup,
+      workers:        workers,
+      monitors:       monitors,
+      overflow:       overflow} = state
+
+      if overflow > 0 do
+        %{state | overflow: overflow-1}
+      else
+        %{state | workers: [new_worker(worker_sup)|workers]}
+      end
+  end
+
   defp name(pool_name) do
     :"#{pool_name}Server"
   end
