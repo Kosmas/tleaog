@@ -22,7 +22,7 @@ defmodule Blitzy.CLI do
   defp process_options(options, nodes) do
     case options do
       {[requests: n], [url], []} ->
-        # perform action
+        do_requests(n, url, nodes)
       _ ->
         do_help
     end
@@ -39,5 +39,21 @@ defmodule Blitzy.CLI do
     ./blitzy -n 100 http://www.bieberfever.com
     """
     System.halt(0)
+  end
+
+  defp do_requests(n_requests, url, nodes) do
+    Logger.info "Pummelling #{url} with #{n_requests} requests"
+
+    total_nodes = Enum.count(nodes)
+    req_per_node = div(n_requests, total_nodes)
+
+    nodes
+    |> Enum.flat_map(fn node ->
+        1..req_per_node |> Enum.map(fn _ ->
+          Task.Supervisor.async({Blitzy.TasksSupervisor, node}, BlitzyWorker, :start, [url])
+        end)
+      end)
+    |> Enum.map(&Task.await(&1, :infinity))
+    |> parse_results
   end
 end
