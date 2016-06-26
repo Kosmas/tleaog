@@ -3,6 +3,7 @@ defmodule Blitzy.Worker do
   require Logger
 
   def start(url, caller, func \\ &HTTPoison.get/1) do
+    IO.puts "Running on #node-#{node}"
     {timestamp, response} = Time.measure(fn -> func.(url) end)
     caller |> send({self, handle_response({Time.to_msecs(timestamp), response})})
   end
