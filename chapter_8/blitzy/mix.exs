@@ -4,7 +4,7 @@ defmodule Blitzy.Mixfile do
   def project do
     [app: :blitzy,
      version: "0.0.1",
-     elixir: "~> 1.2",
+     elixir: "~> 1.2.6",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps]
@@ -14,7 +14,8 @@ defmodule Blitzy.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger]]
+    [mod: {Blitzy, []},
+     applications: [:logger, :httpoison]]
   end
 
   # Dependencies can be Hex packages:
@@ -27,6 +28,9 @@ defmodule Blitzy.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [
+      {:httpoison, "~> 0.9.0"},
+      {:timex,     "~> 2.2.1"}
+    ]
   end
 end
