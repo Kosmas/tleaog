@@ -54,6 +54,6 @@ defmodule Blitzy.CLI do
         end)
       end)
     |> Enum.map(&Task.await(&1, :infinity))
-    |> parse_results
+    #    |> parse_results
   end
 end
