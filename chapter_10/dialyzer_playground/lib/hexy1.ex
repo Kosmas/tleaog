@@ -1,4 +1,4 @@
-defmodule Hexy do
+defmodule Hexy1 do
   @type rgb() :: {0..255, 0..255, 0..255}
   @type hex() :: binary
 
